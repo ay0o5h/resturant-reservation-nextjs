@@ -44,3 +44,24 @@ export const ApiRegister = (info, callback) => {
     })
     .catch((error) => console.log("error", error));
 };
+
+export const ApiRestaurant = async (callback) => {
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(`${URL}/resturant-all`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      console.log(result.rest);
+      if (result.status) return callback(result.rest);
+      return callback(null, "Error Occured");
+    })
+    .catch((error) => console.log("error", error));
+};

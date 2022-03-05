@@ -58,7 +58,7 @@ const Navbar = () => {
 
         <div>
             {language.map((l) => (
-                <p style={{ cursor: 'pointer' }} onClick={() => handleLanguage(l)} >
+                <p key={l} style={{ cursor: 'pointer' }} onClick={() => handleLanguage(l)} >
                     {l}
                 </p>
             ))}

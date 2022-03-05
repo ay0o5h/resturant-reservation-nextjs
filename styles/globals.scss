@@ -42,6 +42,13 @@ a {
       margin-left: 5px;
     }
   }
+
+  .ant-tag-has-color, .ant-tag-has-color a, .ant-tag-has-color a:hover, .ant-tag-has-color .anticon-close, .ant-tag-has-color .anticon-close:hover {
+  color: #fff;
+  font-size: 20px;
+  padding: 5px 30px;
+  margin-left: 0;
+  }
   .btn-login {
      background-color: transparent;
     border: 0;
