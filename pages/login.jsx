@@ -21,6 +21,7 @@ const Login = () => {
             setLoading(false);
             if (error) return message.error("Invalid credentials");
             Cookies.set("token", data.token);
+            console.log(data.user)
             Cookies.set("user", JSON.stringify(data.user));
             Router.push("/");
         });

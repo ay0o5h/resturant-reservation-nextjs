@@ -25,11 +25,17 @@ const language = ['EN', 'AR'];
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [token, setToken] = useState();
+    const [token, setToken] = useState("");
+    const [user, setUser] = useState("");
+
     const Router = useRouter();
     useEffect(() => {
         const token = Cookies.get("token");
+        const user = Cookies.get("user");
+        setUser(JSON.parse(user))
         if (token) setToken(token);
+        console.log(user)
+
     }, []);
     const handleLogout = async () => {
         await Cookies.remove("token");
@@ -151,7 +157,7 @@ const Navbar = () => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="aya" src={avatarProfile} />
+                                    <Avatar src={avatarProfile} alt={user.firstName} />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -172,7 +178,7 @@ const Navbar = () => {
                             >
 
                                 <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">Profile</Typography>
+                                    <Typography textAlign="center">{user.firstName}</Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">Reservation</Typography>
