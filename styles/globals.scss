@@ -322,6 +322,7 @@ nav {
 // single restaurant
 .singleRestaurant {
   @extend .container;
+  margin-top: 2%;
   height: 100vh;
   .left {
     flex: 50%;
@@ -402,4 +403,116 @@ nav {
       }
     }
   }
+}
+
+$cursive: 'Great Vibes', cursive;
+$handwriting: 'Sacramento', cursive;
+
+$white: #fff;
+$black: #000;
+
+@mixin hc(){
+  left: 50%;
+  transform: translatex(-50%);
+}
+
+@mixin vc(){
+  top: 50%;
+  transform: translatey(-50%);
+}
+
+@mixin cc(){
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color) {
+  ::-webkit-scrollbar-button{
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    width:  $size;
+    height: $size;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border: 1px solid lighten($foreground-color, 10%);
+    cursor: pointer;
+  }
+  ::-webkit-scrollbar-track {
+    background: $background-color;
+    width: calc(#{$size} * 2);
+    border: 2px solid lighten($background-color, 10%);
+  }
+  ::-webkit-scrollbar-track-piece {
+    background: $background-color;
+    width: calc(#{$size} / 2);
+    border: 2px solid lighten($background-color, 10%);
+  }
+  body {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+@include scrollbars(2px, rgba(255,255,255,0.15), transparent);
+
+.bgImage {
+    // margin: auto 10%;
+  // max-width: 1200px;
+   display: grid;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70vh;
+  margin: 0;
+  padding: 0;
+  font-family: $handwriting;
+  color: $white;
+  background: #333;
+  // background-image: 
+  //   radial-gradient(ellipse at bottom left, rgba(0,163,203,1) 40%, rgba(0,163,203,0) 40%),
+  //   radial-gradient(ellipse at top right, rgba(0,163,203,1) 30%, rgba(0,163,203,0) 30%),
+  //   linear-gradient(to right, rgba(98,87,147,1) 0%, rgba(98,87,147,1) 33%, rgba(213,93,100,1) 33%, rgba(213,93,100,1) 66%, rgba(228,145,41,1) 66%);
+  background-size: cover;
+   .card {
+    margin: auto;
+    padding: 2em;
+    border-radius: 1em;
+    border: 1px solid transparentize($white, 0.5);
+    text-shadow: 0 0 1em transparentize($black, 0.5);
+    background: transparentize($white, 0.8);
+    backdrop-filter: blur(20px);
+    transform: perspective(500px);
+    transform-style: preserve-3d;
+    
+    .welcome {
+      font-family: $handwriting;
+      transform: translateZ(20px);
+    }
+    
+    .year {
+      font-family: $cursive;
+      font-size: 2.5em;
+      
+      span {
+        display: block;
+        transform: translateZ(40px);
+        &:nth-child(2){
+          padding-left: 1em;
+          transform: translateZ(60px);
+        }
+        &:nth-child(3){
+          padding-left: 2em;
+          transform: translateZ(80px);
+        }
+      }
+      
+    }
+    
+  }
+  
+
 }

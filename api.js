@@ -65,3 +65,17 @@ export const ApiRestaurant = async (callback) => {
     })
     .catch((error) => console.log("error", error));
 };
+export const ApiRestaurantOne = (info, callback) => {
+  var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch(`${URL}/resturant/${parseInt(info)}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+     if (result.status) return callback(result.rest);
+      return callback(null, "Error Occured");
+  })
+  .catch(error => console.log('error', error));
+}
