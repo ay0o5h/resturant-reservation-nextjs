@@ -23,7 +23,7 @@ const Restaurants = () => {
                         restaurant.map((rest) => (
                             <div className="card" key={rest.id}>
                                 <div className="card_image">
-                                    <Link href={`/singleRestaurant/${rest.id}`}>
+                                    <Link href={`/Resturant/${rest.id}`}>
                                         <img src={rest.bgImage} />
                                     </Link>
                                 </div>
