@@ -1,8 +1,11 @@
 import ProgressBar from "@badrap/bar-of-progress";
 import 'antd/dist/antd.css';
+import "devextreme/dist/css/dx.light.css";
 import Router from "next/router";
+// import 'scheduler-react/lib/css/style.css';
 import Layout from '../components/layout/layout';
 import '../styles/globals.scss';
+
 const progress = new ProgressBar({
   size: 3,
   color: "#FB4B53",
