@@ -1,9 +1,15 @@
+import { ViewState } from '@devexpress/dx-react-scheduler';
+import {
+    Appointments, DayView, Scheduler
+} from '@devexpress/dx-react-scheduler-material-ui';
+// const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+import Paper from '@mui/material/Paper';
 import {
     Button, Card, DatePicker,
     Empty,
     Form, InputNumber, message, Popover, Spin
 } from "antd";
-import Scheduler, { Resource } from 'devextreme-react/scheduler';
+// import Scheduler, { Resource } from 'devextreme-react/scheduler';
 import "devextreme/dist/css/dx.light.css";
 import Cookies from "js-cookie";
 import moment from "moment";
@@ -11,79 +17,15 @@ import moment from "moment";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import 'smart-webcomponents-react/source/styles/smart.default.css';
+// import 'smart-webcomponents-react/source/styles/smart.default.css';
 import { ApiRestaurantOne } from "../../api";
-const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 
-const currentDate = new Date();
-const views = ['day'];
-export const dataCal = [
-    {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2022-03-10T17:30:00.000Z'),
-        endDate: new Date('2022-03-10T19:00:00.000Z'),
-        recurrenceRule: 'FREQ=WEEKLY;BYDAY=MO,TH;COUNT=10',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-11-01T17:30:00.000Z'),
-        endDate: new Date('2020-11-01T19:00:00.000Z'),
-        recurrenceRule: 'FREQ=WEEKLY;BYDAY=SU,WE;COUNT=10',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-11-01T20:00:00.000Z'),
-        endDate: new Date('2020-11-01T21:00:00.000Z'),
-        recurrenceRule: 'FREQ=WEEKLY;BYDAY=SU;WKST=TU;INTERVAL=2;COUNT=2',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-11-01T17:00:00.000Z'),
-        endDate: new Date('2020-11-01T17:15:00.000Z'),
-        recurrenceRule: 'FREQ=DAILY;BYDAY=TU;UNTIL=20201203',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-10-24T18:00:00.000Z'),
-        endDate: new Date('2020-10-24T19:00:00.000Z'),
-        recurrenceRule: 'FREQ=YEARLY;BYWEEKNO=50;WKST=SU',
-        recurrenceException: '20201212T190000Z',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-10-24T20:00:00.000Z'),
-        endDate: new Date('2020-10-24T21:35:00.000Z'),
-        recurrenceRule: 'FREQ=YEARLY;BYWEEKNO=51;BYDAY=WE,TH',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-11-24T22:30:00.000Z'),
-        endDate: new Date('2020-11-24T23:45:00.000Z'),
-        recurrenceRule: 'FREQ=MONTHLY;BYMONTHDAY=28;COUNT=1',
-    }, {
-        text: 'متاح',
-        roomId: [1],
-        startDate: new Date('2020-11-01T17:30:00.000Z'),
-        endDate: new Date('2020-11-01T21:00:00.000Z'),
-        recurrenceRule: 'FREQ=YEARLY;BYYEARDAY=333',
-    },
+const currentDate = '2018-11-01';
+const schedulerData = [
+    { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting' },
+    { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
 ];
-
-export const resourcesData = [
-    {
-        id: 1,
-        color: '#03bb92',
-    },
-];
-
-// const Scheduler = dynamic(() => import('smart-webcomponents-react/scheduler'), {
-//     ssr: false, //no server-side rendering 
-
-
-// });
-
 const Resturant = () => {
     const Router = useRouter();
     const [tables, setTables] = useState("")
@@ -96,20 +38,9 @@ const Resturant = () => {
     const [endTime, setEndTime] = useState(0);
     const [numOfPeople, setNumOfPeople] = useState(0);
     const [dataSource, setdataSource] = useState([]);
-    const onContentReady = (e) => {
-        console.log("onContentReady", e);
 
-        // e.component.scrollTo(new Date());
-    }
 
-    const onAppointmentClick = (e) => {
-        e.cancel = true;
-    }
 
-    const onAppointmentDblClick = (e) => {
-
-        e.cancel = true;
-    }
     useEffect(() => {
         const token = Cookies.get("token");
         setToken(token);
@@ -120,39 +51,7 @@ const Resturant = () => {
             setRestaurant(data);
             let tables = data.table;
             setTables(tables)
-            dataSource = [
-                {
-                    label: 'Google AdWords Strategy',
-                    dateStart: new Date(currentYear, currentMonth, todayDate, 9, 0),
-                    dateEnd: new Date(currentYear, currentMonth, todayDate, 10, 30),
-                    backgroundColor: '#E67C73'
-                }, {
-                    label: 'New Brochures',
-                    dateStart: new Date(currentYear, currentMonth, todayDate - 1, 11, 30),
-                    dateEnd: new Date(currentYear, currentMonth, todayDate - 1, 14, 15),
-                    backgroundColor: '#8E24AA'
-                },
-                {
-                    label: 'open',
-                    dateStart: new Date(restaurant.openDate),
-                    dateEnd: new Date(restaurant.openDate),
-                    backgroundColor: 'green',
-                    repeat: {
-                        repeatFreq: 'daily'
-                    }
-                },
-                {
-                    label: 'close',
-                    dateStart: new Date(restaurant.closeDate),
-                    dateEnd: new Date(restaurant.closeDate),
-                    backgroundColor: 'red',
-                    repeat: {
-                        repeatFreq: 'daily'
-                    }
-                },
-            ],
-                setdata_source(dataSource)
-            console.log(data);
+
             console.log(tables);
 
         });
@@ -198,15 +97,7 @@ const Resturant = () => {
     function disabledDate(current) {
         return current && current < moment().startOf("day");
     }
-    const today = new Date(),
-        todayDate = today.getDate(),
-        currentYear = today.getFullYear(),
-        currentMonth = today.getMonth(),
 
-        currentTimeIndicator = true,
-        shadeUntilCurrentTime = true,
-        view = 'day',
-        firstDayOfWeek = 1;
     return (
         <div >
             <Head>
@@ -365,47 +256,27 @@ const Resturant = () => {
             </div>
             {/* <Scheduler className="scheduler" id="scheduler" currentTimeIndicator={currentTimeIndicator} shadeUntilCurrentTime={shadeUntilCurrentTime}
                 dataSource={dataSource} view={view} firstDayOfWeek={firstDayOfWeek}></Scheduler> */}
-            <div className="" height="500px" width="500px">
-                <Scheduler
-                    // rtlEnabled={true}
-                    timeZone={timezone}
-                    dataSource={dataCal}
-                    views={views}
-                    defaultCurrentView="day"
-                    defaultCurrentDate={currentDate}
-                    startDayHour={8}
-                    // height={500}
+            <div style={{ height: "500px", width: "500px" }}>
+                <Paper>
+                    <Scheduler
+                        data={schedulerData}
+                        onCommitChanges={(value) => console.log(value)}
+                    >
+                        <ViewState
+                            currentDate={currentDate}
+                            onOptionChanged={({ value }) => console.log(value)}
 
-                    editing={false}
-                    showAllDayPanel={false}
-                    onContentReady={onContentReady}
-                    onAppointmentClick={onAppointmentClick}
-                    onAppointmentDblClick={onAppointmentDblClick}
-                    onOptionChanged={({ value }) => {
+                        />
+                        <DayView
+                            startDayHour={9}
+                            endDayHour={14}
+                            onOptionChanged={({ value }) => console.log(value)}
 
-                        // if (value[0] !== undefined) {
-                        //     setSelecttTime(() => moment(value[0].startDate).format('YYYY-MM-DD'))
-                        //     console.log("the selected date is now", selectTime)
-                        //     console.log("day format", moment(value[0].startDate).format('dd'))
-                        //     let dayy = moment(value[0].startDate).format('dd');
-                        //     if (arrDayLetters.includes(dayy.toUpperCase())) {
-                        //         setChoosenDay(() => dayy.toUpperCase())
+                        />
 
-                        //         getTime(moment(value[0].startDate).format('YYYY-MM-DD'))
-                        //     } else {
-                        //         message.error("الطبيب غير متاح في هذا اليوم ");
-                        //     }
-                        // }
-                        console.log(value)
-
-                    }}
-                >
-                    <Resource
-                        dataSource={resourcesData}
-                        fieldExpr="roomId"
-                        label="Room"
-                    />
-                </Scheduler>
+                        <Appointments onOptionChanged={({ value }) => console.log(value)} />
+                    </Scheduler>
+                </Paper>
             </div>
         </div>
     );
