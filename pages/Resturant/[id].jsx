@@ -1,31 +1,27 @@
-import { ViewState } from '@devexpress/dx-react-scheduler';
-import {
-    Appointments, DayView, Scheduler
-} from '@devexpress/dx-react-scheduler-material-ui';
-// const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-import Paper from '@mui/material/Paper';
+// import { ViewState } from '@devexpress/dx-react-scheduler';
+// import {
+//     Appointments, DayView, Scheduler
+// } from '@devexpress/dx-react-scheduler-material-ui';
+// import Paper from '@mui/material/Paper';
 import {
     Button, Card, DatePicker,
     Empty,
-    Form, InputNumber, message, Popover, Spin
+    Form, InputNumber, message, Spin
 } from "antd";
-// import Scheduler, { Resource } from 'devextreme-react/scheduler';
 import "devextreme/dist/css/dx.light.css";
 import Cookies from "js-cookie";
 import moment from "moment";
-// import dynamic from 'next/dynamic';
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-// import 'smart-webcomponents-react/source/styles/smart.default.css';
-import { ApiRestaurantOne } from "../../api";
+import { ApiRestaurantOne, makeReservation } from "../../api";
 
 
-const currentDate = '2018-11-01';
-const schedulerData = [
-    { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting' },
-    { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
-];
+// const currentDate = '2018-11-01';
+// const schedulerData = [
+//     { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting' },
+//     { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
+// ];
 const Resturant = () => {
     const Router = useRouter();
     const [tables, setTables] = useState("")
@@ -56,21 +52,16 @@ const Resturant = () => {
 
         });
     }, [Router]);
-    const handleRect = () => {
-        console.log(okay)
+    const handleRect = (id) => {
+        setTableId(() => id);
     };
     const refreshPage = () => {
         window.location.reload();
     };
     function onChangeStart(value, dateString) {
-        const startTime = dateString;
-        setStartTime(startTime);
+        // const startTime = dateString;
+        setStartTime(() => dateString);
         console.log(startTime);
-    }
-    function onChangeEnd(value, dateString) {
-        const endTime = dateString;
-        setEndTime(endTime);
-        console.log(endTime);
     }
     function onChangeNum(value) {
         const numOfPeople = value;
@@ -78,21 +69,25 @@ const Resturant = () => {
         console.log(numOfPeople);
     }
     const onFinish = () => {
-        const packet = {
-            discription: "ok",
-            reservationsDate: startTime,
-            reservationsExpires: endTime,
-            noumberOfPeople: numOfPeople,
-            restaurantId: parseInt(id),
-            tableId,
-        };
-        console.log(packet);
-        ApiReservation(packet, (data, error) => {
-            console.log(data);
-            if (error) return message.error(error);
-            message.success("Successfully booked");
-            refreshPage();
-        });
+        if (token) {
+            const packet = {
+                resTime: startTime,
+                numOfPeople: numOfPeople,
+                table: tableId,
+            };
+            console.log(packet);
+            makeReservation(parseInt(id), packet, (data, error) => {
+                console.log(data);
+                if (error) {
+                    console.log(error);
+                    return message.error("simething went wrong")
+                };
+                message.success("Successfully booked");
+                refreshPage();
+            });
+        } else {
+            return message.error("you need to login")
+        }
     };
     function disabledDate(current) {
         return current && current < moment().startOf("day");
@@ -105,7 +100,6 @@ const Resturant = () => {
             </Head>
 
             {!!restaurant ? (
-                // <img src={restaurant.bgImage} width="100%" height="600px" />
 
                 <div className="bgImage" style={{ backgroundImage: `url(${restaurant.bgImage})` }}>
                     <div className="card" data-tilt data-tilt-scale="0.95" data-tilt-startY="40">
@@ -140,43 +134,20 @@ const Resturant = () => {
                                 <Empty />
                             ) : (
                                 tables?.map((t) => (
-                                    <Popover
-                                        content={"this table has " + restaurant.numOfTable + " seats"}
-                                        title={"table number " + restaurant.numOfTable}
-                                    >
-                                        <circle
-                                            onClick={() => handleRect(t.id)}
-                                            className="circle"
-                                            key={t.id}
-                                            cx={t.x}
-                                            cy={t.y}
-                                            r="15"
-                                            fill={
-                                                // (userTables !== undefined &&
-                                                //     userTables[0] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[1] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[2] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[3] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[4] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[5] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[6] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[7] === table.id) ||
-                                                //     (userTables !== undefined &&
-                                                //         userTables[8] === table.id) ||
-                                                //     (userTables !== undefined && userTables[9] === table.id)
-                                                //     ? "red"
-                                                //     :
-                                                "#882121"
-                                            }
-                                        ></circle>
-                                    </Popover>
+                                    // <Popover
+                                    //     content={"this table has " + restaurant.numOfTable + " seats"}
+                                    //     title={"table number " + restaurant.numOfTable}
+                                    // >
+                                    <circle
+                                        onClick={t.isBooked ? () => message.error("this table is already booked") : () => handleRect(t.id)}
+                                        className="circle"
+                                        key={t.id}
+                                        cx={t.x}
+                                        cy={t.y}
+                                        r="15"
+                                        fill={t.isBooked ? "red" : "#882121"}
+                                    ></circle>
+                                    // </Popover>
                                 ))
                             )
                         ) : (
@@ -198,7 +169,7 @@ const Resturant = () => {
                                 onFinish={onFinish}
                             >
                                 <Form.Item
-                                    name="reservationsDate"
+                                    name="resTime"
                                     rules={[
                                         {
                                             required: true,
@@ -215,25 +186,8 @@ const Resturant = () => {
                                         placeholder="pleace choice  date of reservation"
                                     />
                                 </Form.Item>
-                                <Form.Item
-                                    name="reservationsExpires"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Please select a end reservation time",
-                                        },
-                                    ]}
-                                >
-                                    <DatePicker
-                                        disabledDate={disabledDate}
-                                        showTime={{ format: "HH:mm" }}
-                                        format="YYYY-MM-DD HH:mm"
-                                        onChange={onChangeEnd}
-                                        className="picker"
-                                        placeholder="pleace enter expier  date of reservation"
-                                    />
-                                </Form.Item>
-                                <Form.Item name="noumberOfPeople">
+
+                                <Form.Item name="numOfPeople">
                                     <InputNumber
                                         placeholder="pleace enter no of people"
                                         className="picker-num"
@@ -254,9 +208,7 @@ const Resturant = () => {
                 </div>
 
             </div>
-            {/* <Scheduler className="scheduler" id="scheduler" currentTimeIndicator={currentTimeIndicator} shadeUntilCurrentTime={shadeUntilCurrentTime}
-                dataSource={dataSource} view={view} firstDayOfWeek={firstDayOfWeek}></Scheduler> */}
-            <div style={{ height: "500px", width: "500px" }}>
+            {/* <div style={{ height: "500px", width: "500px" }}>
                 <Paper>
                     <Scheduler
                         data={schedulerData}
@@ -277,7 +229,7 @@ const Resturant = () => {
                         <Appointments onOptionChanged={({ value }) => console.log(value)} />
                     </Scheduler>
                 </Paper>
-            </div>
+            </div> */}
         </div>
     );
 };

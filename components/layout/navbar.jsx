@@ -180,8 +180,8 @@ const Navbar = () => {
                                 <MenuItem onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{user.firstName}</Typography>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">Reservation</Typography>
+                                <MenuItem >
+                                    <Typography textAlign="center"><Link href="/reservation">Reservation</Link></Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handleLogout}>
                                     <Typography textAlign="center">Logout</Typography>

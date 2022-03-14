@@ -522,7 +522,12 @@ $black: #000;
   width:500px;
   height: auto;
 }
-
+.reservation {
+  @extend .container;
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color:$mainColor;
+  }
+}
 // @media (max-width: 600px) {
 //   .grid {
 //     width: 100%;
