@@ -1,37 +1,44 @@
-import { ArrowRightOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { langs } from '../components/layout/navbar';
 import Restaurants from "../components/resturant";
 import cover from "../public/images/cover.svg";
+import { translate } from '../translate';
 export default function Home() {
   const [token, setToken] = useState();
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) setToken(token);
+    console.log(langs);
   }, []);
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>{langs === 'en' ? 'Home' : 'الرئيسية'}</title>
       </Head>
-      <div className="main">
-        <div className="left">
-          <h1>Book Your Table Now</h1>
-          <p>
-            Get restaurant table reservations Better online than keep a busy
-            phone line
-          </p>
+      <div className="main" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}` }}>
+        <div className="left" style={{ textAlign: `${langs === "en" ? "left" : "right"}` }}>
+          <h1>{translate[langs]["homeTitle"]}</h1>
+          <p>{translate[langs]["homeSubTitle"]}</p>
           {!token ? (
             <Link href="/signup" >
-              <a className="btn-login">
+              {langs === "en" ? <a className="btn-login">
                 {" "}
-                Get Started <ArrowRightOutlined
+                {translate[langs]["homeButton"]} <ArrowRightOutlined
+                  style={{ fontSize: "16px" }}
+                />
+              </a> : <a className="btn-login">
+                {" "}
+                <ArrowLeftOutlined
                   style={{ fontSize: "16px" }}
                 />{" "}
-              </a>
+                {translate[langs]["homeButton"]}
+              </a>}
+
             </Link>
           ) : null}
         </div>
@@ -39,9 +46,7 @@ export default function Home() {
           <Image className="cover" src={cover} />
         </div>
       </div>
-
       <Restaurants />
-
     </>
   )
 }

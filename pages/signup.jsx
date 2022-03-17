@@ -1,4 +1,4 @@
-import { ArrowRightOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import Cookies from "js-cookie";
 import Head from "next/head";
@@ -6,7 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ApiRegister } from "../api";
+import { langs } from '../components/layout/navbar';
 import cover from "../public/images/login.svg";
+import { translate } from '../translate';
 const Signup = () => {
     const Router = useRouter();
     const onFinish = (info) => {
@@ -20,11 +22,11 @@ const Signup = () => {
     return (
         <>
             <Head>
-                <title>Sign up</title>
+                <title>{translate[langs]["signup"]}</title>
             </Head>
             <div className="login">
-                <div className="left">
-                    <h1>Sign up</h1>
+                <div className="left" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}`, textAlign: `${langs === "en" ? "left" : "right"}` }}>
+                    <h1>{translate[langs]["signup"]}</h1>
                     <Form
                         initialValues={{
                             remember: true,
@@ -39,7 +41,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please input your name!",
+                                    message: langs === 'en' ? "Please input your name!" : "الرجاء إدخال اسمك",
                                 },
                             ]}
                         >
@@ -50,7 +52,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please input your name!",
+                                    message: langs === 'en' ? "Please input your last name!" : "الرجاء ادخال اسم الاب",
                                 },
                             ]}
                         >
@@ -62,7 +64,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please input your E-mail!",
+                                    message: langs === 'en' ? "Please input your phone!" : "الرجاء إدخال هاتفك!",
                                 },
                             ]}
                         >
@@ -74,7 +76,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please input your password!",
+                                    message: langs === 'en' ? "Please input your password!" : "الرجاء إدخال كلمة المرور الخاصة بك!",
                                 },
                             ]}
                             hasFeedback
@@ -84,12 +86,12 @@ const Signup = () => {
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                <ArrowRightOutlined style={{ fontWeight: 900 }} />
+                                {langs === 'en' ? < ArrowRightOutlined style={{ fontWeight: 900 }} /> : <ArrowLeftOutlined style={{ fontWeight: 900 }} />}
                             </Button>
                         </Form.Item>
                     </Form>
                     <p>
-                        already have an account ? <Link href="/login">Login</Link>
+                        {translate[langs]["alreadyExist"]} ? <Link href="/login">{translate[langs]["login"]}</Link>
                     </p>
                 </div>
                 <div className="right">

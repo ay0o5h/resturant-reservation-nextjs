@@ -124,6 +124,7 @@ nav {
 .main {
   @extend .container;
   height: 100vh;
+
   .left {
     flex: 50%;
     h1 {
@@ -137,7 +138,7 @@ nav {
       font-family: "Times New Roman", Times, serif;
       font-size: 20px;
       font-weight: 500;
-      width: 80%;
+      
       color: rgba(0, 0, 0, 0.3);
     }
     .btn {

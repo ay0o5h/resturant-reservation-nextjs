@@ -1,9 +1,9 @@
-import { DeleteOutlined, HistoryOutlined, SmileOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined, HistoryOutlined, SmileOutlined } from '@ant-design/icons';
 import { Empty, message, Spin, Tabs, Timeline } from 'antd';
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { deleteBooking, getActiveBookings, getPreviousBookings } from '../api';
+import { cancalBooking, deleteBooking, getActiveBookings, getPreviousBookings } from '../api';
 
 const { TabPane } = Tabs;
 export default function Reservation() {
@@ -39,6 +39,19 @@ export default function Reservation() {
             })
         })
     }
+    const cancelItem = (id) => {
+        cancalBooking(id, (data, error) => {
+            console.log(data);
+            if (error) return message.error("something went wrong");
+            message.success("cancel Successfully Successfully");
+            getPreviousBookings((data, error) => {
+                if (error) return message.error("something went wrong");
+                let previousBookings = data.data
+                setPreviousBookings(previousBookings);
+
+            })
+        })
+    }
     return (
         <div className="reservation">
             <Tabs defaultActiveKey="1">
@@ -58,7 +71,7 @@ export default function Reservation() {
 
                             <Timeline>
                                 {activeBookings.map((c) => (
-                                    <Timeline.Item>table No. {c.id} , {" "} {c.numOfPeople} person , at  {" "} {moment(c.resTime).format('llll')} {c.status === null ? "wait to accespt" : c.status}</Timeline.Item>
+                                    <Timeline.Item>table No. {c.id} , {" "} {c.numOfPeople} person , at  {" "} {moment(c.resTime).format('llll')} {c.status === null ? "wait to accespt" : c.status} <CloseOutlined style={{ color: "red", marginLeft: "30px" }} onClick={() => cancelItem(c.id)} /></Timeline.Item>
 
                                 ))}
 

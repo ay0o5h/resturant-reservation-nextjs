@@ -19,15 +19,17 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import avatarProfile from "../../public/images/avatar.svg";
 import logo from "../../public/images/logo2.svg";
+import { translate } from '../../translate';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Reservation', 'Logout',];
-const language = ['EN', 'AR'];
+const language = ['en', 'ar'];
+export const langs = "ar";
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [token, setToken] = useState("");
     const [user, setUser] = useState("");
-
+    const [lang, setLang] = useState("en");
     const Router = useRouter();
     useEffect(() => {
         const token = Cookies.get("token");
@@ -58,7 +60,7 @@ const Navbar = () => {
         setAnchorElUser(null);
     };
     const handleLanguage = (v) => {
-        console.log(v)
+        setLang(() => v)
     }
     const content = (
 
@@ -129,7 +131,7 @@ const Navbar = () => {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        LOGO
+
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -147,7 +149,7 @@ const Navbar = () => {
                     {!token ? (
                         <Box sx={{ flexGrow: 0 }}>
                             <Link href="/login">
-                                <a className="btn-login">login</a>
+                                <a className="btn-login">{translate[langs]["login"]}</a>
                             </Link>
                             <Popover trigger="click" style={{ marginTop: '10px' }} placement="bottom" content={content}>
                                 <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', marginLeft: '15px', paddingTop: '10px' }} />

@@ -1,8 +1,9 @@
+import { translate } from '../../translate';
 const Footer = () => {
     return (
         <div className="footer">
             <hr />
-            <p>&copy; 2021 All rights reserved</p>
+            <p style={{ textAlign: `${langs === 'en' ? 'left' : 'right'}` }} >&copy; 2021 {" "}{translate[langs]["footer"]} </p>
         </div>
     );
 };
