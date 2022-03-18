@@ -1,8 +1,3 @@
-// import { ViewState } from '@devexpress/dx-react-scheduler';
-// import {
-//     Appointments, DayView, Scheduler
-// } from '@devexpress/dx-react-scheduler-material-ui';
-// import Paper from '@mui/material/Paper';
 import {
     Button, Card, DatePicker,
     Empty,
@@ -15,13 +10,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ApiRestaurantOne, makeReservation } from "../../api";
+import { langs } from '../../components/layout/navbar';
+import { translate } from '../../translate';
 
-
-// const currentDate = '2018-11-01';
-// const schedulerData = [
-//     { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting' },
-//     { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
-// ];
 const Resturant = () => {
     const Router = useRouter();
     const [tables, setTables] = useState("")
@@ -80,13 +71,13 @@ const Resturant = () => {
                 console.log(data);
                 if (error) {
                     console.log(error);
-                    return message.error("simething went wrong")
+                    return message.error(translate[langs]["somethingWrong"])
                 };
-                message.success("Successfully booked");
+                message.success(translate[langs]["successfullybooked"]);
                 refreshPage();
             });
         } else {
-            return message.error("you need to login")
+            return message.error(translate[langs]["needLogin"])
         }
     };
     function disabledDate(current) {
@@ -103,19 +94,18 @@ const Resturant = () => {
 
                 <div className="bgImage" style={{ backgroundImage: `url(${restaurant.bgImage})` }}>
                     <div className="card" data-tilt data-tilt-scale="0.95" data-tilt-startY="40">
-                        <div className="welcome">
-                            {/* Welcome to */}
-                            {restaurant.isOpen ? 'open now ' : 'Close now'}
+                        <div className="welcome" style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}>
+                            {restaurant.isOpen ? translate[langs]["open"] : translate[langs]["close"]}
                         </div>
                         <div className="year">
-                            <span> Welcome to</span>
+                            <span style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}> {translate[langs]["welcome"]}</span>
                             <span>{restaurant.name}</span>
                             <span>{moment(restaurant.openDate).utc().format(" HH:mm ")}- {moment(restaurant.closeDate).utc().format(" HH:mm ")}</span>
                         </div>
                     </div>
                 </div>
             ) : null}
-            <div className="singleRestaurant">
+            <div className="singleRestaurant" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}` }}>
                 <div className="left">
                     <svg version="1.1" baseProfile="full" width="500" height="500">
                         {!!restaurant ? (
@@ -139,7 +129,7 @@ const Resturant = () => {
                                     //     title={"table number " + restaurant.numOfTable}
                                     // >
                                     <circle
-                                        onClick={t.isBooked ? () => message.error("this table is already booked") : () => handleRect(t.id)}
+                                        onClick={t.isBooked ? () => message.error(translate[langs]["alreadyBooked"]) : () => handleRect(t.id)}
                                         className="circle"
                                         key={t.id}
                                         cx={t.x}
@@ -159,9 +149,9 @@ const Resturant = () => {
                     <div className="site-card-border-less-wrapper">
                         <Card
                             className="card-res"
-                            title="Make Reseravation"
+                            title={translate[langs]["makeReseravation"]}
                             bordered={true}
-                            style={{ width: 500 }}
+                            style={{ width: 500, textAlign: `${langs === "en" ? 'left' : 'right'}` }}
                         >
                             <Form
                                 className="form"
@@ -173,7 +163,7 @@ const Resturant = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: "Please select a start reservation time",
+                                            message: translate[langs]["makeReseravation"]
                                         },
                                     ]}
                                 >
@@ -183,13 +173,13 @@ const Resturant = () => {
                                         format="YYYY-MM-DD HH:mm"
                                         onChange={onChangeStart}
                                         className="picker"
-                                        placeholder="pleace choice  date of reservation"
+                                        placeholder={translate[langs]["choiceTime"]}
                                     />
                                 </Form.Item>
 
                                 <Form.Item name="numOfPeople">
                                     <InputNumber
-                                        placeholder="pleace enter no of people"
+                                        placeholder={translate[langs]["noPeople"]}
                                         className="picker-num"
                                         min={1}
                                         max={100}
@@ -198,38 +188,14 @@ const Resturant = () => {
                                 </Form.Item>
                                 <Form.Item>
                                     <Button type="primary" htmlType="submit">
-                                        Book now
+                                        {translate[langs]["BookNow"]}
                                     </Button>
                                 </Form.Item>
                             </Form>
                         </Card>
                     </div>
-                    ,
                 </div>
-
             </div>
-            {/* <div style={{ height: "500px", width: "500px" }}>
-                <Paper>
-                    <Scheduler
-                        data={schedulerData}
-                        onCommitChanges={(value) => console.log(value)}
-                    >
-                        <ViewState
-                            currentDate={currentDate}
-                            onOptionChanged={({ value }) => console.log(value)}
-
-                        />
-                        <DayView
-                            startDayHour={9}
-                            endDayHour={14}
-                            onOptionChanged={({ value }) => console.log(value)}
-
-                        />
-
-                        <Appointments onOptionChanged={({ value }) => console.log(value)} />
-                    </Scheduler>
-                </Paper>
-            </div> */}
         </div>
     );
 };

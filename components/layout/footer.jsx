@@ -1,9 +1,11 @@
 import { translate } from '../../translate';
+import { langs } from './navbar';
 const Footer = () => {
     return (
         <div className="footer">
             <hr />
-            <p style={{ textAlign: `${langs === 'en' ? 'left' : 'right'}` }} >&copy; 2021 {" "}{translate[langs]["footer"]} </p>
+
+            <center><p  ><span style={{ textAlign: `${langs === 'en' ? 'left' : 'right'}` }}>&copy; 2021 {" "}</span>{translate[langs]["footer"]} </p></center>
         </div>
     );
 };

@@ -2,6 +2,8 @@ import { Empty, message, Spin, Tag } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ApiRestaurant } from "../api";
+import { translate } from '../translate';
+import { langs } from './layout/navbar';
 const Restaurants = () => {
     const [restaurant, setRestaurant] = useState();
     useEffect(() => {
@@ -14,7 +16,7 @@ const Restaurants = () => {
     }, []);
     return (
         <div className="restaurants">
-            <h1>Restaurants</h1>
+            <h1>{translate[langs]["restaurants"]}</h1>
             <div className="cards-list">
                 {!!restaurant ? (
                     !restaurant?.length > 0 ? (

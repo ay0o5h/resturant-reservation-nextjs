@@ -83,9 +83,9 @@ const Navbar = () => {
                         component="div"
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                     >
-                        <div className="logoDiv">
+                        <div className="logoDiv" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}` }}>
                             <Image className="logo" src={logo} width="40px" height="40px" />
-                            <h1>reservtable</h1>
+                            <h1>{translate[langs]["logo"]}</h1>
                         </div>
                     </Typography>
 

@@ -8,6 +8,20 @@ export const translate = {
         footer: "All rights reserved",
         haveAccount: "you don't have an account",
         alreadyExist: "already have an account",
+        restaurants: "Restaurants",
+        close: "Close now",
+        open: "Open now",
+        welcome: "Welcome to",
+        alreadyBooked: "this table is already booked",
+        makeReseravation: "Make Reseravation",
+        BookNow: " Book now",
+        successfullybooked: "Successfully booked",
+        somethingWrong: "Something went wrong",
+        needLogin: "you need to login",
+        choiceTime: "pleace choice  Time of reservation",
+        noPeople: "pleace enter no of people",
+         logo:"reservtable"
+        
     },
     ar: {
         homeTitle: "احجز طاولتك الآن",
@@ -17,7 +31,20 @@ export const translate = {
         signup: "تسجيل ",
         footer: "جميع الحقوق محفوظه",
         haveAccount: "لاتمتلك حساب ",
-        alreadyExist: "هل لديك حساب"
+        alreadyExist: "هل لديك حساب",
+        restaurants: "المطاعم",
+        close: "مغلق الأن",
+        open: "مفتوح الأن",
+        welcome: "مرحباً في",
+        alreadyBooked: "هذه الطاولة محجوزه بلفعل",
+        makeReseravation: "احجز",
+        BookNow: "احجز الأن",
+        successfullybooked: "تم الحجز بنجاح",
+        somethingWrong: "حدث خطأ ما",
+        needLogin: "تحتاج الى تسجيل الدخول",
+        choiceTime: "من فضلك اختر وقت الحجز",
+        noPeople: "من فضلك اختر عدد الأشخاص",
+        logo:"حجزك"
     }
 }
  
