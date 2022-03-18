@@ -266,6 +266,8 @@ nav {
   height: 100vh;
   .left {
     flex: 50%;
+     padding-right: 7%;
+      padding-left: 7%;
     h1 {
       font-size: 40px;
       font-weight: 700;
@@ -273,7 +275,7 @@ nav {
       color: #281766;
     }
     .form {
-      padding-right: 30%;
+     
       .input {
         border-radius: 20px;
         padding: 8px 10px;

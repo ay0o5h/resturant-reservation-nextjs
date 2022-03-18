@@ -56,7 +56,7 @@ const Login = () => {
                                 },
                             ]}
                         >
-                            <Input placeholder="aya@example.com" className="input" />
+                            <Input placeholder="0780000000" className="input" />
                         </Form.Item>
 
                         <Form.Item

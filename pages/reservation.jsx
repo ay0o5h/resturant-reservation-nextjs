@@ -4,7 +4,8 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { cancalBooking, deleteBooking, getActiveBookings, getPreviousBookings } from '../api';
-
+import { langs } from '../components/layout/navbar';
+import { translate } from '../translate';
 const { TabPane } = Tabs;
 export default function Reservation() {
     const [activeBookings, setActiveBookings] = useState([]);
@@ -53,25 +54,26 @@ export default function Reservation() {
         })
     }
     return (
-        <div className="reservation">
-            <Tabs defaultActiveKey="1">
+        <div className="reservation" style={{ direction: `${langs === "en" ? 'ltr' : 'rtl'}`, height: "70vh" }}>
+            <Tabs defaultActiveKey="1" >
                 <TabPane
+
                     tab={
                         <span>
                             <SmileOutlined />
-                            Active bookings
+                            {translate[langs]["Activebookings"]}
                         </span>
                     }
                     key="1"
                 >
                     {!!activeBookings ? (
                         !activeBookings?.length > 0 ? (
-                            <Empty />
+                            <Empty title={false} />
                         ) : (
 
-                            <Timeline>
+                            <Timeline mode={langs === "en" ? "left" : "right"} >
                                 {activeBookings.map((c) => (
-                                    <Timeline.Item>table No. {c.id} , {" "} {c.numOfPeople} person , at  {" "} {moment(c.resTime).format('llll')} {c.status === null ? "wait to accespt" : c.status} <CloseOutlined style={{ color: "red", marginLeft: "30px" }} onClick={() => cancelItem(c.id)} /></Timeline.Item>
+                                    <Timeline.Item style={{ width: "800px", padding: "5px 15px " }}>{translate[langs]["tableNo"]}. {c.id} , {" "} {c.numOfPeople} {translate[langs]["person"]} , at  {" "} {moment(c.resTime).format('llll')} {c.status === null ? translate[langs]["waitToAccespt"] : c.status === "accept" ? translate[langs]["accept"] : translate[langs]["regect"]} <CloseOutlined style={{ color: "red", marginLeft: "30px" }} onClick={() => cancelItem(c.id)} /></Timeline.Item>
 
                                 ))}
 
@@ -84,7 +86,7 @@ export default function Reservation() {
                     tab={
                         <span>
                             <HistoryOutlined />
-                            Previous bookings
+                            {translate[langs]["Previousbookings"]}
                         </span>
                     }
 
@@ -95,9 +97,9 @@ export default function Reservation() {
                             <Empty />
                         ) : (
 
-                            <Timeline>
+                            <Timeline mode={langs === "en" ? "left" : "right"}>
                                 {previousBookings.map((c) => (
-                                    <Timeline.Item>table No. {c.id} , {" "} {c.numOfPeople} person , at  {" "} {moment(c.resTime).format('llll')} , {c.status}  <DeleteOutlined style={{ color: "red", marginLeft: "30px" }} onClick={() => deleteItem(c.id)} /></Timeline.Item>
+                                    <Timeline.Item style={{ width: "800px", padding: "5px 15px " }}>{translate[langs]["tableNo"]}. {c.id} , {" "} {c.numOfPeople}  {translate[langs]["person"]} , at  {" "} {moment(c.resTime).format('llll')} , {c.status === "accept" ? translate[langs]["accept"] : translate[langs]["regect"]}  <DeleteOutlined style={{ color: "red", marginLeft: "30px" }} onClick={() => deleteItem(c.id)} /></Timeline.Item>
 
                                 ))}
 
@@ -107,6 +109,6 @@ export default function Reservation() {
                     )}
                 </TabPane>
             </Tabs>
-        </div>
+        </div >
     )
 }

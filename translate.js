@@ -20,7 +20,17 @@ export const translate = {
         needLogin: "you need to login",
         choiceTime: "pleace choice  Time of reservation",
         noPeople: "pleace enter no of people",
-         logo:"reservtable"
+        logo: "reservtable",
+        Activebookings: "Active bookings",
+        Previousbookings: "Previous bookings",
+        waitToAccespt: "wait to accespt",
+        tableNo: "table No",
+        accept: "accept",
+        regect: "regect ",
+        person: "person",
+        Reservation: "Reservation",
+        Logout:"Logout"
+
         
     },
     ar: {
@@ -44,7 +54,17 @@ export const translate = {
         needLogin: "تحتاج الى تسجيل الدخول",
         choiceTime: "من فضلك اختر وقت الحجز",
         noPeople: "من فضلك اختر عدد الأشخاص",
-        logo:"حجزك"
+        logo: "حجزك",
+        Activebookings: "الحجوزات النشطه",
+        Previousbookings: "الحجوزات السابقة",
+        waitToAccespt: "في انتظار الموافقة",
+        tableNo: 'طاولة رقم ',
+        accept: "تم الموافقة عليه",
+        regect: "تم الرفض",
+        person: "عدد الاشخاص",
+        Reservation: "الحجوزات",
+        Logout:"تسجيل خروج"
+        
     }
 }
  

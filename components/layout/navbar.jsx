@@ -3,7 +3,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -74,7 +73,10 @@ const Navbar = () => {
         </div>
     );
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{
+            direction: `${langs === 'en' ? "ltr" : "rtl"
+                }`
+        }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -83,7 +85,7 @@ const Navbar = () => {
                         component="div"
                         sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                     >
-                        <div className="logoDiv" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}` }}>
+                        <div className="logoDiv" >
                             <Image className="logo" src={logo} width="40px" height="40px" />
                             <h1>{translate[langs]["logo"]}</h1>
                         </div>
@@ -100,7 +102,7 @@ const Navbar = () => {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Menu
+                        {/* <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
                             anchorOrigin={{
@@ -123,7 +125,7 @@ const Navbar = () => {
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
-                        </Menu>
+                        </Menu> */}
                     </Box>
                     <Typography
                         variant="h6"
@@ -134,7 +136,7 @@ const Navbar = () => {
 
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {/* {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
@@ -142,7 +144,7 @@ const Navbar = () => {
                             >
                                 {page}
                             </Button>
-                        ))}
+                        ))} */}
                     </Box>
 
 
@@ -151,8 +153,8 @@ const Navbar = () => {
                             <Link href="/login">
                                 <a className="btn-login">{translate[langs]["login"]}</a>
                             </Link>
-                            <Popover trigger="click" style={{ marginTop: '10px' }} placement="bottom" content={content}>
-                                <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', marginLeft: '15px', paddingTop: '10px' }} />
+                            <Popover trigger="click" style={{ marginTop: '20px' }} placement="bottom" content={content}>
+                                <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', margin: '0 15px', paddingTop: '10px' }} />
                             </Popover>
                         </Box>
                     ) : (
@@ -183,10 +185,10 @@ const Navbar = () => {
                                     <Typography textAlign="center">{user.firstName}</Typography>
                                 </MenuItem>
                                 <MenuItem >
-                                    <Typography textAlign="center"><Link href="/reservation">Reservation</Link></Typography>
+                                    <Typography textAlign="center"><Link href="/reservation">{translate[langs]["Reservation"]}</Link></Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handleLogout}>
-                                    <Typography textAlign="center">Logout</Typography>
+                                    <Typography textAlign="center">{translate[langs]["Logout"]}</Typography>
                                 </MenuItem>
 
                             </Menu>
