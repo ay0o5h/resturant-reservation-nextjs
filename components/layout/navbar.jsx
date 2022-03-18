@@ -19,10 +19,11 @@ import { useEffect, useState } from "react";
 import avatarProfile from "../../public/images/avatar.svg";
 import logo from "../../public/images/logo2.svg";
 import { translate } from '../../translate';
+
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Reservation', 'Logout',];
 const language = ['en', 'ar'];
-export const langs = "ar";
+export const langs = Cookies.get("lang") ? Cookies.get("lang") : 'en';
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -59,6 +60,9 @@ const Navbar = () => {
         setAnchorElUser(null);
     };
     const handleLanguage = (v) => {
+        // localStorage.setItem('lang', JSON.stringify(v));
+        Cookies.set("lang", v);
+        Router.reload(window.location.pathname);
         setLang(() => v)
     }
     const content = (
