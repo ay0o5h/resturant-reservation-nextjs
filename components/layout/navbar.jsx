@@ -23,7 +23,7 @@ import { translate } from '../../translate';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Reservation', 'Logout',];
 const language = ['en', 'ar'];
-export const langs = Cookies.get("lang") ? Cookies.get("lang") : 'en';
+export const langs = Cookies.get("lang") !== undefined ? Cookies.get("lang") : 'en';
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
