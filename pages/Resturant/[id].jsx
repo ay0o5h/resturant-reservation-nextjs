@@ -1,7 +1,6 @@
 import {
-    Button, Card, DatePicker,
-    Empty,
-    Form, InputNumber, message, Spin
+    Button, Card, Empty,
+    Form, InputNumber, message, Spin, TimePicker
 } from "antd";
 import "devextreme/dist/css/dx.light.css";
 import Cookies from "js-cookie";
@@ -25,7 +24,6 @@ const Resturant = () => {
     const [endTime, setEndTime] = useState(0);
     const [numOfPeople, setNumOfPeople] = useState(0);
     const [dataSource, setdataSource] = useState([]);
-
 
 
     useEffect(() => {
@@ -80,10 +78,35 @@ const Resturant = () => {
             return message.error(translate[langs]["needLogin"])
         }
     };
-    function disabledDate(current) {
-        return current && current < moment().startOf("day");
+    const getDisabledHours = () => {
+        var hours = [];
+        for (var i = 0; i < moment().hour(); i++) {
+            hours.push(i);
+        }
+        for (var i = moment(restaurant.closeDate).format("HH"); i < 24; i++) {
+            hours.push(i);
+
+        }
+        for (var i = moment(restaurant.openDate).format("HH") - 1; i >= 0; i--) {
+            hours.push(i);
+        }
+        for (var i = moment(restaurant.closeDate).format("HH"); i < 24; i++) {
+            hours.push(i);
+
+        }
+        return hours;
     }
 
+    const getDisabledMinutes = (selectedHour) => {
+        var minutes = [];
+        if (selectedHour === moment().hour()) {
+            for (var i = 0; i < moment().minute(); i++) {
+                minutes.push(i);
+            }
+        }
+
+        return minutes;
+    }
     return (
         <div >
             <Head>
@@ -100,7 +123,7 @@ const Resturant = () => {
                         <div className="year">
                             <span style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}> {translate[langs]["welcome"]}</span>
                             <span>{restaurant.name}</span>
-                            <span>{moment(restaurant.openDate).utc().format(" HH:mm ")}- {moment(restaurant.closeDate).utc().format(" HH:mm ")}</span>
+                            <span>{moment(restaurant.openDate).format(" HH:mm ")}- {moment(restaurant.closeDate).format(" HH:mm ")}</span>
                         </div>
                     </div>
                 </div>
@@ -167,14 +190,13 @@ const Resturant = () => {
                                         },
                                     ]}
                                 >
-                                    <DatePicker
-                                        disabledDate={disabledDate}
-                                        showTime={{ format: "HH:mm" }}
-                                        format="YYYY-MM-DD HH:mm"
+                                    <TimePicker
                                         onChange={onChangeStart}
                                         className="picker"
-                                        placeholder={translate[langs]["choiceTime"]}
-                                    />
+                                        disabledHours={getDisabledHours}
+                                        disabledMinutes={getDisabledMinutes}
+                                        placeholder={translate[langs]["choiceTime"]} showNow={false} format='HH:mm' />
+
                                 </Form.Item>
 
                                 <Form.Item name="numOfPeople">

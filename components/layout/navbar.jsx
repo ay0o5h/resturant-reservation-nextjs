@@ -62,7 +62,7 @@ const Navbar = () => {
     const handleLanguage = (v) => {
         // localStorage.setItem('lang', JSON.stringify(v));
         Cookies.set("lang", v);
-        Router.reload(window.location.pathname);
+        Router.push("/");
         setLang(() => v)
     }
     const content = (
