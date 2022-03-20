@@ -1,15 +1,17 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import Cookies from "js-cookie";
+import { useTranslations } from 'next-intl';
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ApiRegister } from "../api";
-import { langs } from '../components/layout/navbar';
 import cover from "../public/images/login.svg";
-import { translate } from '../translate';
+
 const Signup = () => {
+    const t = useTranslations('home');
+    const { locale, locales, defaultLocale, asPath } = useRouter();
     const Router = useRouter();
     const onFinish = (info) => {
         ApiRegister(info, (data, error) => {
@@ -22,11 +24,11 @@ const Signup = () => {
     return (
         <>
             <Head>
-                <title>{translate[langs]["signup"]}</title>
+                <title>{t("signup")}</title>
             </Head>
             <div className="login">
-                <div className="left" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}`, textAlign: `${langs === "en" ? "left" : "right"}` }}>
-                    <h1>{translate[langs]["signup"]}</h1>
+                <div className="left" style={{ flexDirection: `${locale === "en" ? "row" : "row-reverse"}`, textAlign: `${locale === "en" ? "left" : "right"}` }}>
+                    <h1>{t("signup")}</h1>
                     <Form
                         initialValues={{
                             remember: true,
@@ -41,7 +43,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: langs === 'en' ? "Please input your name!" : "الرجاء إدخال اسمك",
+                                    message: locale === 'en' ? "Please input your name!" : "الرجاء إدخال اسمك",
                                 },
                             ]}
                         >
@@ -52,7 +54,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: langs === 'en' ? "Please input your last name!" : "الرجاء ادخال اسم الاب",
+                                    message: locale === 'en' ? "Please input your last name!" : "الرجاء ادخال اسم الاب",
                                 },
                             ]}
                         >
@@ -64,7 +66,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: langs === 'en' ? "Please input your phone!" : "الرجاء إدخال هاتفك!",
+                                    message: locale === 'en' ? "Please input your phone!" : "الرجاء إدخال هاتفك!",
                                 },
                             ]}
                         >
@@ -76,7 +78,7 @@ const Signup = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: langs === 'en' ? "Please input your password!" : "الرجاء إدخال كلمة المرور الخاصة بك!",
+                                    message: locale === 'en' ? "Please input your password!" : "الرجاء إدخال كلمة المرور الخاصة بك!",
                                 },
                             ]}
                             hasFeedback
@@ -86,12 +88,12 @@ const Signup = () => {
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit">
-                                {langs === 'en' ? < ArrowRightOutlined style={{ fontWeight: 900 }} /> : <ArrowLeftOutlined style={{ fontWeight: 900 }} />}
+                                {locale === 'en' ? < ArrowRightOutlined style={{ fontWeight: 900 }} /> : <ArrowLeftOutlined style={{ fontWeight: 900 }} />}
                             </Button>
                         </Form.Item>
                     </Form>
                     <p>
-                        {translate[langs]["alreadyExist"]} ? <Link href="/login">{translate[langs]["login"]}</Link>
+                        {t("alreadyExist")} ? <Link href="/login">{t("login")}</Link>
                     </p>
                 </div>
                 <div className="right">

@@ -1,16 +1,17 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message } from "antd";
 import Cookies from "js-cookie";
+import { useTranslations } from 'next-intl';
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ApiLogin } from "../api";
-import { langs } from '../components/layout/navbar';
 import cover from "../public/images/login.svg";
-import { translate } from '../translate';
 const Login = () => {
+    const t = useTranslations('home');
+    const { locale, locales, defaultLocale, asPath } = useRouter();
     const Router = useRouter();
 
     const [loading, setLoading] = useState(false);
@@ -31,11 +32,11 @@ const Login = () => {
     return (
         <>
             <Head>
-                <title>{translate[langs]["login"]}</title>
+                <title>{t("login")}</title>
             </Head>
-            <div className="login" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}`, textAlign: `${langs === "en" ? "left" : "right"}` }}>
+            <div className="login" style={{ flexDirection: `${locale === "en" ? "row" : "row-reverse"}`, textAlign: `${locale === "en" ? "left" : "right"}` }}>
                 <div className="left" >
-                    <h1>{translate[langs]["login"]}</h1>
+                    <h1>{t("login")}</h1>
 
                     <Form
                         initialValues={{
@@ -52,7 +53,7 @@ const Login = () => {
 
                                 {
                                     required: true,
-                                    message: langs === 'en' ? "Please input your phone!" : "الرجاء إدخال هاتفك!",
+                                    message: locale === 'en' ? "Please input your phone!" : "الرجاء إدخال هاتفك!",
                                 },
                             ]}
                         >
@@ -64,7 +65,7 @@ const Login = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: langs === 'en' ? "Please input your password!" : "الرجاء إدخال كلمة المرور الخاصة بك!",
+                                    message: locale === 'en' ? "Please input your password!" : "الرجاء إدخال كلمة المرور الخاصة بك!",
                                 },
                             ]}
                             hasFeedback
@@ -79,13 +80,13 @@ const Login = () => {
                                 type="primary"
                                 htmlType="submit"
                             >
-                                {langs === 'en' ? < ArrowRightOutlined style={{ fontWeight: 900 }} /> : <ArrowLeftOutlined style={{ fontWeight: 900 }} />}
+                                {locale === 'en' ? < ArrowRightOutlined style={{ fontWeight: 900 }} /> : <ArrowLeftOutlined style={{ fontWeight: 900 }} />}
 
                             </Button>
                         </Form.Item>
                     </Form>
                     <p>
-                        {translate[langs]["haveAccount"]} ? <Link style={{ color: "blue" }} href="/signup">{translate[langs]["signup"]}</Link>
+                        {t("haveAccount")} ? <Link style={{ color: "blue" }} href="/signup">{t("signup")}</Link>
                     </p>
                 </div>
                 <div className="right">
