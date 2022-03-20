@@ -4,13 +4,15 @@ import { useTranslations } from 'next-intl';
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { langs } from '../components/layout/navbar';
 import Restaurants from "../components/resturant";
 import cover from "../public/images/cover.svg";
-import { translate } from '../translate';
+
 export default function Home() {
   const t = useTranslations('home');
+  const { locale, locales, defaultLocale, asPath } = useRouter();
 
   const [token, setToken] = useState();
   useEffect(() => {
@@ -21,18 +23,18 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>{langs === 'en' ? 'Home' : 'الرئيسية'}</title>
+        <title>{locale === 'en' ? 'Home' : 'الرئيسية'}</title>
       </Head>
-      <div className="main" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}` }}>
-        <div className="left" style={{ textAlign: `${langs === "en" ? "left" : "right"}` }}>
-          <h1>{translate[langs]["homeTitle"]}</h1>
-          <p>{translate[langs]["homeSubTitle"]}</p>
-          <p>{t('homeTitle')}</p>
+      <div className="main" style={{ flexDirection: `${locale === "en" ? "row" : "row-reverse"}` }}>
+        <div className="left" style={{ textAlign: `${locale === "en" ? "left" : "right"}` }}>
+          <h1>{t("homeTitle")}</h1>
+          <p>{t("homeSubTitle")}</p>
+          {/* <p>{t('homeTitle')}</p> */}
           {!token ? (
             <Link href="/signup" >
-              {langs === "en" ? <a className="btn-login">
+              {locale === "en" ? <a className="btn-login">
                 {" "}
-                {translate[langs]["homeButton"]} <ArrowRightOutlined
+                {t("homeButton")} <ArrowRightOutlined
                   style={{ fontSize: "16px" }}
                 />
               </a> : <a className="btn-login">
@@ -40,7 +42,7 @@ export default function Home() {
                 <ArrowLeftOutlined
                   style={{ fontSize: "16px" }}
                 />{" "}
-                {translate[langs]["homeButton"]}
+                {t("homeButton")}
               </a>}
 
             </Link>

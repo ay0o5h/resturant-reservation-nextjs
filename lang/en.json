@@ -1,11 +1,34 @@
   {
        "home":{
-            "homeTitle": "Book Your Table Now",
+        "homeTitle": "Book Your Table Now",
         "homeSubTitle": "Get restaurant table reservations Better online than keep a busy phone line",
         "homeButton": "Get Started",
         "login": "Login",
-        "signup": "Sign Up"
-       }
-       
-        
+        "signup": "Sign Up",
+         "footer": "All rights reserved",
+        "haveAccount": "you don't have an account",
+        "alreadyExist": "already have an account",
+        "restaurants": "Restaurants",
+        "close": "Close now",
+        "open": "Open now",
+        "welcome": "Welcome to",
+        "alreadyBooked": "this table is already booked",
+        "makeReseravation": "Make Reseravation",
+        "BookNow": " Book now",
+        "successfullybooked": "Successfully booked",
+        "somethingWrong": "Something went wrong",
+        "needLogin": "you need to login",
+        "choiceTime": "pleace choice  Time of reservation",
+        "noPeople": "pleace enter no of people",
+        "logo": "reservtable",
+        "Activebookings": "Active bookings",
+        "Previousbookings": "Previous bookings",
+        "waitToAccespt": "wait to accespt",
+        "tableNo": "table No",
+        "accept": "accept",
+        "regect": "regect ",
+        "person": "person",
+        "Reservation": "Reservation",
+        "Logout":"Logout"
+       }   
     }
