@@ -5,14 +5,15 @@ import {
 import "devextreme/dist/css/dx.light.css";
 import Cookies from "js-cookie";
 import moment from "moment";
+import { useTranslations } from 'next-intl';
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ApiRestaurantOne, makeReservation, updateResturantState } from "../../api";
-import { langs } from '../../components/layout/navbar';
-import { translate } from '../../translate';
 
 const Resturant = () => {
+    const { locale, locales, defaultLocale, asPath } = useRouter();
+    const t = useTranslations('home');
     const Router = useRouter();
     const [tables, setTables] = useState("")
     const [token, setToken] = useState("");
@@ -42,7 +43,7 @@ const Resturant = () => {
         });
         updateResturantState(id, (data, error) => {
             console.log(id)
-            if (error) return message.error(translate[langs]["somethingWrong"]);
+            if (error) return message.error(t("somethingWrong"));
             let isopen = data.rest.isOpen
             setIsOpen(isopen);
             console.log(data);
@@ -76,13 +77,13 @@ const Resturant = () => {
                 console.log(data);
                 if (error) {
                     console.log(error);
-                    return message.error(translate[langs]["somethingWrong"])
+                    return message.error(t("somethingWrong"))
                 };
-                message.success(translate[langs]["successfullybooked"]);
+                message.success(t("successfullybooked"));
                 refreshPage();
             });
         } else {
-            return message.error(translate[langs]["needLogin"])
+            return message.error(t("needLogin"))
         }
     };
     const getDisabledHours = () => {
@@ -124,18 +125,18 @@ const Resturant = () => {
 
                 <div className="bgImage" style={{ backgroundImage: `url(${restaurant.bgImage})` }}>
                     <div className="card" data-tilt data-tilt-scale="0.95" data-tilt-startY="40">
-                        <div className="welcome" style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}>
-                            {isopen ? translate[langs]["open"] : translate[langs]["close"]}
+                        <div className="welcome" style={{ textAlign: `${locale === "en" ? 'left' : 'right'}` }}>
+                            {isopen ? t("open") : t("close")}
                         </div>
                         <div className="year">
-                            <span style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}> {translate[langs]["welcome"]}</span>
+                            <span style={{ textAlign: `${locale === "en" ? 'left' : 'right'}` }}> {t("welcome")}</span>
                             <span>{restaurant.name}</span>
                             <span>{moment(restaurant.openDate).format(" HH:mm ")}- {moment(restaurant.closeDate).format(" HH:mm ")}</span>
                         </div>
                     </div>
                 </div>
             ) : null}
-            <div className="singleRestaurant" style={{ flexDirection: `${langs === "en" ? "row" : "row-reverse"}` }}>
+            <div className="singleRestaurant" style={{ flexDirection: `${locale === "en" ? "row" : "row-reverse"}` }}>
                 <div className="left">
                     <svg version="1.1" baseProfile="full" width="500" height="500">
                         {!!restaurant ? (
@@ -159,7 +160,7 @@ const Resturant = () => {
                                     //     title={"table number " + restaurant.numOfTable}
                                     // >
                                     <circle
-                                        onClick={t.isBooked ? () => message.error(translate[langs]["alreadyBooked"]) : () => handleRect(t.id)}
+                                        onClick={t.isBooked ? () => message.error(t("alreadyBooked")) : () => handleRect(t.id)}
                                         className="circle"
                                         key={t.id}
                                         cx={t.x}
@@ -179,9 +180,9 @@ const Resturant = () => {
                     <div className="site-card-border-less-wrapper">
                         <Card
                             className="card-res"
-                            title={translate[langs]["makeReseravation"]}
+                            title={t("makeReseravation")}
                             bordered={true}
-                            style={{ width: 500, textAlign: `${langs === "en" ? 'left' : 'right'}` }}
+                            style={{ width: 500, textAlign: `${locale === "en" ? 'left' : 'right'}` }}
                         >
                             <Form
                                 className="form"
@@ -193,7 +194,7 @@ const Resturant = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: translate[langs]["makeReseravation"]
+                                            message: t("makeReseravation")
                                         },
                                     ]}
                                 >
@@ -202,13 +203,13 @@ const Resturant = () => {
                                         className="picker"
                                         disabledHours={getDisabledHours}
                                         disabledMinutes={getDisabledMinutes}
-                                        placeholder={translate[langs]["choiceTime"]} showNow={false} format='HH:mm' />
+                                        placeholder={t("choiceTime")} showNow={false} format='HH:mm' />
 
                                 </Form.Item>
 
                                 <Form.Item name="numOfPeople">
                                     <InputNumber
-                                        placeholder={translate[langs]["noPeople"]}
+                                        placeholder={t("noPeople")}
                                         className="picker-num"
                                         min={1}
                                         max={100}
@@ -217,7 +218,7 @@ const Resturant = () => {
                                 </Form.Item>
                                 <Form.Item>
                                     <Button type="primary" htmlType="submit">
-                                        {translate[langs]["BookNow"]}
+                                        {t("BookNow")}
                                     </Button>
                                 </Form.Item>
                             </Form>

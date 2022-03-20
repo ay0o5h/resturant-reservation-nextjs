@@ -1,10 +1,12 @@
 import { Empty, message, Spin, Tag } from "antd";
+import { useTranslations } from 'next-intl';
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ApiRestaurant } from "../api";
-import { translate } from '../translate';
-import { langs } from './layout/navbar';
 const Restaurants = () => {
+    const { locale, locales, defaultLocale, asPath } = useRouter();
+    const t = useTranslations('home');
     const [restaurant, setRestaurant] = useState();
     useEffect(() => {
         ApiRestaurant((data, error) => {
@@ -16,7 +18,7 @@ const Restaurants = () => {
     }, []);
     return (
         <div className="restaurants">
-            <h1>{translate[langs]["restaurants"]}</h1>
+            <h1>{t("restaurants")}</h1>
             <div className="cards-list">
                 {!!restaurant ? (
                     !restaurant?.length > 0 ? (
