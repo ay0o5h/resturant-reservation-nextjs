@@ -230,3 +230,10 @@ const Resturant = () => {
     );
 };
 export default Resturant;
+export async function getStaticProps({ locale }) {
+    return {
+        props: {
+            messages: (await import(`../../lang/${locale}.json`)).default
+        }
+    };
+}

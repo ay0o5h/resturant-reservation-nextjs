@@ -104,3 +104,10 @@ const Signup = () => {
     );
 };
 export default Signup;
+export async function getStaticProps({ locale }) {
+    return {
+        props: {
+            messages: (await import(`../lang/${locale}.json`)).default
+        }
+    };
+}
