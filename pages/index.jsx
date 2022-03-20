@@ -1,5 +1,6 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
+import { useTranslations } from 'next-intl';
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,8 @@ import Restaurants from "../components/resturant";
 import cover from "../public/images/cover.svg";
 import { translate } from '../translate';
 export default function Home() {
+  const t = useTranslations('home');
+
   const [token, setToken] = useState();
   useEffect(() => {
     const token = Cookies.get("token");
@@ -24,6 +27,7 @@ export default function Home() {
         <div className="left" style={{ textAlign: `${langs === "en" ? "left" : "right"}` }}>
           <h1>{translate[langs]["homeTitle"]}</h1>
           <p>{translate[langs]["homeSubTitle"]}</p>
+          <p>{t('homeTitle')}</p>
           {!token ? (
             <Link href="/signup" >
               {langs === "en" ? <a className="btn-login">
@@ -49,4 +53,11 @@ export default function Home() {
       <Restaurants />
     </>
   )
+}
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../lang/${locale}.json`)).default
+    }
+  };
 }
