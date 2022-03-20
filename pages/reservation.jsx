@@ -13,15 +13,16 @@ export default function Reservation() {
     const Router = useRouter();
 
     useEffect(() => {
+
         getActiveBookings((data, error) => {
-            if (error) return message.error("something went wrong");
+            if (error) return message.error(translate[langs]["somethingWrong"]);
             let activeBookings = data.data
             setActiveBookings(activeBookings);
             console.log(data);
 
         })
         getPreviousBookings((data, error) => {
-            if (error) return message.error("something went wrong");
+            if (error) return message.error(translate[langs]["somethingWrong"]);
             let previousBookings = data.data
             setPreviousBookings(previousBookings);
 

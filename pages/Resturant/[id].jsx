@@ -8,7 +8,7 @@ import moment from "moment";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ApiRestaurantOne, makeReservation } from "../../api";
+import { ApiRestaurantOne, makeReservation, updateResturantState } from "../../api";
 import { langs } from '../../components/layout/navbar';
 import { translate } from '../../translate';
 
@@ -23,7 +23,7 @@ const Resturant = () => {
     const [startTime, setStartTime] = useState(0);
     const [endTime, setEndTime] = useState(0);
     const [numOfPeople, setNumOfPeople] = useState(0);
-    const [dataSource, setdataSource] = useState([]);
+    const [isopen, setIsOpen] = useState("");
 
 
     useEffect(() => {
@@ -40,6 +40,13 @@ const Resturant = () => {
             console.log(tables);
 
         });
+        updateResturantState(id, (data, error) => {
+            console.log(id)
+            if (error) return message.error(translate[langs]["somethingWrong"]);
+            let isopen = data.rest.isOpen
+            setIsOpen(isopen);
+            console.log(data);
+        })
     }, [Router]);
     const handleRect = (id) => {
         setTableId(() => id);
@@ -118,7 +125,7 @@ const Resturant = () => {
                 <div className="bgImage" style={{ backgroundImage: `url(${restaurant.bgImage})` }}>
                     <div className="card" data-tilt data-tilt-scale="0.95" data-tilt-startY="40">
                         <div className="welcome" style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}>
-                            {restaurant.isOpen ? translate[langs]["open"] : translate[langs]["close"]}
+                            {isopen ? translate[langs]["open"] : translate[langs]["close"]}
                         </div>
                         <div className="year">
                             <span style={{ textAlign: `${langs === "en" ? 'left' : 'right'}` }}> {translate[langs]["welcome"]}</span>

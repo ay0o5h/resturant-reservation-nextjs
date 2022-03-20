@@ -185,6 +185,7 @@ nav {
 .restaurants {
   @extend .container;
   flex-direction: column;
+  justify-content: flex-start;
   margin-top: 10%;
   h1 {
     color: $mainColor;
