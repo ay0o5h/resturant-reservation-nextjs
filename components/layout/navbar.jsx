@@ -95,102 +95,104 @@ const Navbar = () => {
         </div>
     );
     return (
-        <AppBar position="static" style={{
-            direction: `${locale === "en" ? "ltr" : "rtl"
-                }`
-        }}>
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                    >
-                        <div className="logoDiv" >
-                            <Image className="logo" src={logo} width="40px" height="40px" />
-                            <h1>{t("logo")}</h1>
-                        </div>
-                    </Typography>
-
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
-                            color="inherit"
+        <div className="nav-dev">
+            <AppBar position="static" style={{
+                direction: `${locale === "en" ? "ltr" : "rtl"
+                    }`
+            }}>
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                         >
-                            <MenuIcon />
-                        </IconButton>
+                            <div className="logoDiv" >
+                                <Image className="logo" src={logo} width="40px" height="40px" />
+                                <h1>{t("logo")}</h1>
+                            </div>
+                        </Typography>
 
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                    >
-
-                    </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    </Box>
-
-
-                    {!token ? (
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Link href="/login">
-                                <a className="btn-login">{t("login")}</a>
-                            </Link>
-                            <Popover trigger="click" style={{ marginTop: '20px' }} placement="bottom" content={content}>
-                                <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', margin: '0 15px', paddingTop: '10px' }} />
-                            </Popover>
-                        </Box>
-                    ) : (
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar src={avatarProfile} alt={user.firstName} />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
                             >
+                                <MenuIcon />
+                            </IconButton>
 
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{user.firstName}</Typography>
-                                </MenuItem>
-                                <MenuItem >
-                                    <Typography textAlign="center"><Link href="/reservation">{t("Reservation")}</Link></Typography>
-                                </MenuItem>
-                                <MenuItem onClick={handleLogout}>
-                                    <Typography textAlign="center">{t("Logout")}</Typography>
-                                </MenuItem>
-
-                            </Menu>
-                            <Popover trigger="click" placement="bottom" content={content}>
-                                <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', marginLeft: '15px' }} />
-                            </Popover>
                         </Box>
-                    )}
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="div"
+                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                        >
 
-                </Toolbar>
-            </Container>
-        </AppBar>
+                        </Typography>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        </Box>
+
+
+                        {!token ? (
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Link href="/login">
+                                    <a className="btn-login">{t("login")}</a>
+                                </Link>
+                                <Popover trigger="click" style={{ marginTop: '20px' }} placement="bottom" content={content}>
+                                    <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', margin: '0 15px', paddingTop: '10px' }} />
+                                </Popover>
+                            </Box>
+                        ) : (
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Tooltip title="Open settings">
+                                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <Avatar src={avatarProfile} alt={user.firstName} />
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{ mt: '45px', mx: '10px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Typography textAlign="center">{user.firstName}</Typography>
+                                    </MenuItem>
+                                    <MenuItem >
+                                        <Typography textAlign="center"><Link href="/reservation" style={{ color: 'black' }}>{t("Reservation")}</Link></Typography>
+                                    </MenuItem>
+                                    <MenuItem onClick={handleLogout}>
+                                        <Typography textAlign="center">{t("Logout")}</Typography>
+                                    </MenuItem>
+
+                                </Menu>
+                                <Popover trigger="click" placement="bottom" content={content}>
+                                    <GlobalOutlined style={{ color: '#398AB9', fontSize: '30px', marginRight: '7px', marginLeft: '7px' }} />
+                                </Popover>
+                            </Box>
+                        )}
+
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </div>
     );
 }
 export default Navbar;

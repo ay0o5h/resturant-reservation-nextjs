@@ -10,7 +10,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ApiRestaurantOne, makeReservation, updateResturantState } from "../../api";
-
 const Resturant = () => {
     const { locale, locales, defaultLocale, asPath } = useRouter();
     const t = useTranslations('home');
@@ -28,6 +27,7 @@ const Resturant = () => {
 
 
     useEffect(() => {
+
         const token = Cookies.get("token");
         setToken(token);
         console.log(token);
@@ -231,9 +231,81 @@ const Resturant = () => {
 };
 export default Resturant;
 export async function getStaticProps({ locale }) {
+    let data = null;
+    let s;
+    if (typeof window !== "undefined") {
+        const currentURL = window.location.pathname;
+        s = currentURL.substring(currentURL.length - 1);
+        console.log(s)
+
+    }
+    try {
+        data = await getData(s);
+    } catch (err) { console.log(err) };
+
+
+
+
     return {
         props: {
-            messages: (await import(`../../lang/${locale}.json`)).default
+            messages: (await import(`../../lang/${locale}.json`)).default,
+            id: String(s),
+            data,
         }
     };
 }
+
+// }
+export async function getStaticPaths() {
+
+    let s;
+    if (typeof window !== "undefined") {
+        const currentURL = window.location.pathname;
+        s = currentURL.substring(currentURL.length - 1);
+        console.log(s)
+
+    }
+    return {
+        paths: [
+            { params: { id: String(s) } }
+        ],
+        fallback: true // false or 'blocking'
+    };
+}
+// export async function getStaticPaths() {
+
+//     const paths = getAllPostIds().toString();
+
+//     return {
+
+//         paths,
+
+//         fallback: false,
+
+//     };
+
+// }
+
+
+// const getAllPostIds = async () => {
+
+//     const postsDirectory = await promises.readFile(join(process.cwd(), 'Resturant', '[id].jsx'))
+
+//     const fileNames = fs.readdirSync(postsDirectory)
+
+
+//     return fileNames.map(fileName => {
+
+//         return {
+
+//             params: {
+
+//                 id: fileName.replace(/\.md$/, '')
+
+//             }
+
+//         }
+
+//     })
+
+// }
