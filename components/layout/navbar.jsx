@@ -38,7 +38,7 @@ const Navbar = () => {
     useEffect(() => {
         const token = Cookies.get("token");
         const user = Cookies.get("user");
-        if (user) setUser(JSON.parse(user));
+        if (token) setUser(JSON.parse(user));
         if (token) setToken(token);
         console.log(user)
 

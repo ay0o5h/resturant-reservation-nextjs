@@ -12,6 +12,9 @@ $secondaryColor: #f8c94c;
 .css-1q39md6-MuiButtonBase-root-MuiButton-root{
   color: $mainColor;
 }
+.css-2s90m6-MuiAvatar-root {
+  top:-6px;
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -415,30 +418,24 @@ nav {
     }
   }
 }
-
 $cursive: 'Great Vibes', cursive;
 $handwriting: 'Sacramento', cursive;
-
 $white: #fff;
 $black: #000;
-
 @mixin hc(){
   left: 50%;
   transform: translatex(-50%);
 }
-
 @mixin vc(){
   top: 50%;
   transform: translatey(-50%);
 }
-
 @mixin cc(){
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 @mixin scrollbars($size, $foreground-color, $background-color) {
   ::-webkit-scrollbar-button{
     display: none;
@@ -467,12 +464,8 @@ $black: #000;
     scrollbar-track-color: $background-color;
   }
 }
-
 @include scrollbars(2px, rgba(255,255,255,0.15), transparent);
-
 .bgImage {
-    // margin: auto 10%;
-  // max-width: 1200px;
    display: grid;
   top: 0;
   left: 0;
@@ -483,10 +476,6 @@ $black: #000;
   font-family: $handwriting;
   color: $white;
   background: #333;
-  // background-image: 
-  //   radial-gradient(ellipse at bottom left, rgba(0,163,203,1) 40%, rgba(0,163,203,0) 40%),
-  //   radial-gradient(ellipse at top right, rgba(0,163,203,1) 30%, rgba(0,163,203,0) 30%),
-  //   linear-gradient(to right, rgba(98,87,147,1) 0%, rgba(98,87,147,1) 33%, rgba(213,93,100,1) 33%, rgba(213,93,100,1) 66%, rgba(228,145,41,1) 66%);
   background-size: cover;
    .card {
     margin: auto;
@@ -498,16 +487,13 @@ $black: #000;
     backdrop-filter: blur(20px);
     transform: perspective(500px);
     transform-style: preserve-3d;
-    
     .welcome {
       font-family: $handwriting;
       transform: translateZ(20px);
     }
-    
     .year {
       font-family: $cursive;
       font-size: 2.5em;
-      
       span {
         display: block;
         transform: translateZ(40px);
@@ -520,12 +506,8 @@ $black: #000;
           transform: translateZ(80px);
         }
       }
-      
     }
-    
   }
-  
-
 }
 .dx-scheduler {
   width:500px;
@@ -537,30 +519,18 @@ $black: #000;
     color:$mainColor;
   }
 }
-// @media (max-width: 600px) {
-//   .grid {
-//     width: 100%;
-//     flex-direction: column;
-//   }
+.mange {
+  span {
+    color: #ccc;
+    margin: 5px 0 ;
 
-//   .main {
-//     width: 100%;
-//   }
-
-//   .scheduler {
-//     margin: 20px auto;
-//   }
-// }
-
-
-
-// .scheduler {
-//   width:100%;
-//   height: 500px;
-//   overflow: auto;
-// }
-
-
+  }
+  h3 {
+    color:$mainColor;
+    font-weight: 900;
+    margin: 5px 0 ;
+  }
+}
 
 
 
