@@ -86,7 +86,9 @@ export const makeReservation = async (id, info, callback) => {
    console.log(id);
   
   var myHeaders = new Headers();
-   myHeaders.append("token", token);
+  myHeaders.append("token", token);
+  myHeaders.append('Accept', 'application/json');
+    myHeaders.append('Access-Control-Allow-Origin', '*');
 myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify(info);
